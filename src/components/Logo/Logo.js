@@ -1,6 +1,6 @@
 import React from "react";
-import Tilt from 'react-parallax-tilt';
 import "tachyons";
+import Tilt from 'react-parallax-tilt';
 import './Logo.css'
 import brain from './brain.png';
 
