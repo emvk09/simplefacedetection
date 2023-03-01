@@ -7,7 +7,7 @@ import brain from './brain.png';
 const Logo= () =>{
     return(
         <div>
-            <Tilt className="Tilt flex justify-center w-10 pa3 ml3 br3 shadow-3">
+            <Tilt className="Tilt flex justify-center w-10 ml3 pa1 br3 shadow-3 pointer">
                 <img alt= "logo" src= {brain}/>
             </Tilt>
         </div>
