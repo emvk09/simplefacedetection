@@ -1,28 +1,6 @@
 import React from "react";
 import "tachyons"
 
-/*const Navigation= (props) =>{
-    props.isSignedIn(true)
-    ?
-    <div className="flex justify-end">
-        <p 
-        onClick= {() =>{ props.routechange('signin') }}
-        className="f3 mr3 link pointer dim underline-hover">
-        Sign out</p>
-    </div>
-    :
-    <div className="flex justify-end">
-        <p 
-        onClick= {() =>{ props.routechange('signin') }}
-        className="f3 mr3 link pointer dim underline-hover">
-        Sign In</p>
-        <p 
-        onClick= {() =>{ props.routechange('register') }}
-        className="f3 mr3 link pointer dim underline-hover">
-        Register</p>
-    </div>
-}*/
-
 const Navigation= (props) =>{
     if(props.isSignedIn){
         return(
@@ -30,7 +8,8 @@ const Navigation= (props) =>{
                 <p 
                 onClick= {() =>{ props.routechange('signin') }}
                 className="f3 mr3 link pointer dim underline-hover">
-                Sign out</p>
+                Sign out
+                </p>
             </div>
         )
     }
@@ -40,11 +19,13 @@ const Navigation= (props) =>{
                 <p 
                 onClick= {() =>{ props.routechange('signin') }}
                 className="f3 mr3 link pointer dim underline-hover">
-                Sign In</p>
+                Sign In
+                </p>
                 <p 
                 onClick= {() =>{ props.routechange('register') }}
                 className="f3 mr3 link pointer dim underline-hover">
-                Register</p>
+                Register
+                </p>
             </div>
         )
     }

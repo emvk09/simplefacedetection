@@ -1,17 +1,17 @@
 import React from 'react';
 import 'tachyons';
 
-const Rank= () =>{
+const EntryCount= (props) =>{
     return(
         <div className='tc'>
             <div className='white f3'>
-                {`Edwin your current rank is ...`}
+                {`${props.name}, your current entry count is ...`}
             </div>
             <div className='white f2'>
-                {`#9`}
+                {`#${props.entries}`}
             </div>
         </div>
     )
 }
 
-export default Rank;
+export default EntryCount;
