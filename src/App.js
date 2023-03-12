@@ -8,11 +8,6 @@ import EntryCount from "./components/EntryCount/EntryCount.js";
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import Signin from "./components/Signin/Signin.js";
 import Register from "./components/Register/Register.js";
-// import Clarifai from "clarifai";
-
-// const app = new Clarifai.App({
-//  apiKey: "",
-// });
 
 class App extends React.Component{
   constructor(){
@@ -59,36 +54,42 @@ class App extends React.Component{
 
   onSubmitChange= () => { 
     this.setState({ imageUrl: this.state.input });
-    // app.models.predict({
-    //   id: 'face-detection',
-    //   name: 'face-detection',
-    //   version: '6dc7e46bc9124c5c8824be4822abe105',
-    //   type: 'visual-detector',
-    // }, this.state.input)
-    // .then((response) => { // each time a correct response is obtained from an api client, this PUT request for updating the no. of entries will be executed
-      fetch("http://localhost:3000/imageentries", {
+
+    // passing the url to backend to receive the response from api client
+    fetch("http://localhost:3000/api", {
+      method: "post",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          inputUrl: this.state.input
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+
+      // 1st duty is to update the image entries number IF and ONLY IF we get the data. For this we have to pass the id to backend.
+      if(data){
+        fetch("http://localhost:3000/imageentries", {
           method: "put",
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
-              id: this.state.user.id
+            id: this.state.user.id
           })
-      })
-      .then(response => response.json()) // this response is the number of image entries count which was sent from backend after doing the calculations
-      .then((count) => {
-        // // if we change the user object of the state object, then the whole data inside the user object will be lost 
-        // this.setState({user: { 
-        //   entries: count
-        // }})
-        this.setState(Object.assign(this.state.user, {entries: count}))
-      }) 
+        })
+        .then((fetch_response) => fetch_response.json()) 
+        .then(count => {
+          // if we change the user object of the state object, then the whole data inside the user object will be lost 
+          // this.setState({user: { 
+          //   entries: count
+          // }})
+          this.setState(Object.assign(this.state.user, {entries: count}))
+        })
+      }
 
-    //   this.displayFaceBox(this.calculateFaceLocation(response))
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // })
+      // 2nd duty is to send the data for building the face detection box
+      this.displayFaceBox(this.calculateFaceLocation(data));
+    })
   }
-
+    
   calculateFaceLocation= (data) => {
     const clarifaiFace= data.outputs[0].data.regions[0].region_info.bounding_box;
     const image= document.getElementById('inputimage')
@@ -103,6 +104,7 @@ class App extends React.Component{
   }
 
   displayFaceBox= (box) => {
+    console.log(box)
     this.setState({box: box});
   }
 
